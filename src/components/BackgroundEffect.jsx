@@ -5,6 +5,7 @@ function BackgroundEffect() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detectar si es móvil
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 1080);
     };
@@ -19,41 +20,10 @@ function BackgroundEffect() {
       }
     };
 
-    const handleDeviceOrientation = (event) => {
-      if (isMobile) {
-        const { gamma, beta } = event; // gamma = izquierda/derecha, beta = arriba/abajo
-        setPosition({
-          x: gamma * 10,  // sensibilidad ajustada
-          y: beta * 10,
-        });
-      }
-    };
+    window.addEventListener('mousemove', handleMouseMove);
 
-    // Escuchar movimiento del mouse o movimiento del dispositivo
-    if (isMobile) {
-      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // iOS: pedir permiso
-        DeviceOrientationEvent.requestPermission()
-          .then(permissionState => {
-            if (permissionState === 'granted') {
-              window.addEventListener('deviceorientation', handleDeviceOrientation);
-            }
-          })
-          .catch((err) => {
-            console.error('Error solicitando permiso de orientación:', err);
-          });
-      } else {
-        // Android: probablemente no necesita permiso
-        window.addEventListener('deviceorientation', handleDeviceOrientation);
-      }
-    } else {
-      window.addEventListener('mousemove', handleMouseMove);
-    }
-
-    // Cleanup
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('deviceorientation', handleDeviceOrientation);
       window.removeEventListener('resize', checkMobile);
     };
   }, [isMobile]);
@@ -80,7 +50,7 @@ function BackgroundEffect() {
         style={calcTransform(0.02, 0.01)}
       />
 
-      {/* Fondo de difuminado en móviles */}
+      {/* Fondo negro semitransparente en móvil */}
       {isMobile && (
         <div className="absolute inset-0 backdrop-blur-sm"></div>
       )}
