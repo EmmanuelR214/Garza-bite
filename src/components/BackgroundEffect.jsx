@@ -5,7 +5,6 @@ function BackgroundEffect() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Detectar si es móvil
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 1080);
     };
@@ -20,10 +19,26 @@ function BackgroundEffect() {
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    const handleDeviceOrientation = (event) => {
+      if (isMobile) {
+        const { gamma, beta } = event; // gamma = inclinación izquierda/derecha, beta = inclinación adelante/atrás
+
+        setPosition({
+          x: gamma * 5, // puedes ajustar la sensibilidad aquí
+          y: beta * 5,
+        });
+      }
+    };
+
+    if (isMobile) {
+      window.addEventListener('deviceorientation', handleDeviceOrientation);
+    } else {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('deviceorientation', handleDeviceOrientation);
       window.removeEventListener('resize', checkMobile);
     };
   }, [isMobile]);

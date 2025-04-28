@@ -13,10 +13,10 @@ function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
                         {/* Columna de texto */}
                         <div className="text-center md:text-left space-y-6">
-                            <h1 className="text-4xl font-extrabold text-[#3e2a08]">
+                            <h1 className="text-4xl font-extrabold text-[#3e2a08] ">
                                 El impulso que tu <span className="text-orange-500">día</span> necesita empieza aquí
                             </h1>
-                            <p className=''>
+                            <p className='text-start'>
                                 Aumenta tu productividad y mejora tu estado de ánimo con un vaso de café por la mañana.
                             </p>
                             <div className="flex justify-center md:justify-start">
