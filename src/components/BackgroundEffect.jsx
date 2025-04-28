@@ -24,8 +24,8 @@ function BackgroundEffect() {
         const { gamma, beta } = event; // gamma = inclinación izquierda/derecha, beta = inclinación adelante/atrás
 
         setPosition({
-          x: gamma * 5, // puedes ajustar la sensibilidad aquí
-          y: beta * 5,
+          x: gamma * 25, // puedes ajustar la sensibilidad aquí
+          y: beta * 25,
         });
       }
     };
