@@ -21,21 +21,36 @@ function BackgroundEffect() {
 
     const handleDeviceOrientation = (event) => {
       if (isMobile) {
-        const { gamma, beta } = event; // gamma = inclinación izquierda/derecha, beta = inclinación adelante/atrás
-
+        const { gamma, beta } = event; // gamma = izquierda/derecha, beta = arriba/abajo
         setPosition({
-          x: gamma * 25, // puedes ajustar la sensibilidad aquí
-          y: beta * 25,
+          x: gamma * 10,  // sensibilidad ajustada
+          y: beta * 10,
         });
       }
     };
 
+    // Escuchar movimiento del mouse o movimiento del dispositivo
     if (isMobile) {
-      window.addEventListener('deviceorientation', handleDeviceOrientation);
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        // iOS: pedir permiso
+        DeviceOrientationEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              window.addEventListener('deviceorientation', handleDeviceOrientation);
+            }
+          })
+          .catch((err) => {
+            console.error('Error solicitando permiso de orientación:', err);
+          });
+      } else {
+        // Android: probablemente no necesita permiso
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
+      }
     } else {
       window.addEventListener('mousemove', handleMouseMove);
     }
 
+    // Cleanup
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('deviceorientation', handleDeviceOrientation);
@@ -65,7 +80,7 @@ function BackgroundEffect() {
         style={calcTransform(0.02, 0.01)}
       />
 
-      {/* Fondo negro semitransparente en móvil */}
+      {/* Fondo de difuminado en móviles */}
       {isMobile && (
         <div className="absolute inset-0 backdrop-blur-sm"></div>
       )}
