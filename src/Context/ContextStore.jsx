@@ -6,32 +6,97 @@ export const CartContext = createContext();
 // Proveedor
 export const CartProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
+  const [ordenes, setOrdenes] = useState([]);
 
-  // useEffect para cargar carrito desde localStorage al montar
+  // Cargar carrito desde localStorage al iniciar
   useEffect(() => {
     const carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
+    const ordenesGuardadas = JSON.parse(localStorage.getItem('ordenes')) || [];
+    setOrdenes(ordenesGuardadas);
     setCarrito(carritoGuardado);
   }, []);
 
-  // Función para agregar un producto al carrito
+  // Guardar carrito en localStorage
+  const actualizarLocalStorage = (nuevoCarrito) => {
+    localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
+  };
+
+  // Agregar producto o aumentar cantidad
   const agregarAlCarrito = (producto) => {
-    // Actualizar estado
-    setCarrito((prevCarrito) => {
-      const carritoActualizado = [...prevCarrito, producto];
-      // También actualizar localStorage
-      localStorage.setItem('carrito', JSON.stringify(carritoActualizado));
-      return carritoActualizado;
+    setCarrito((prev) => {
+      const existente = prev.find((p) => p.nombre === producto.nombre);
+
+      let nuevoCarrito;
+      if (existente) {
+        nuevoCarrito = prev.map((p) =>
+          p.nombre === producto.nombre
+            ? { ...p, cantidad: (p.cantidad || 1) + 1 }
+            : p
+        );
+      } else {
+        nuevoCarrito = [...prev, { ...producto, cantidad: 1 }];
+      }
+
+      actualizarLocalStorage(nuevoCarrito);
+      return nuevoCarrito;
     });
   };
 
-  // Función para vaciar carrito (opcional)
+  // Disminuir cantidad o eliminar producto si llega a 0
+  const disminuirCantidad = (nombre) => {
+    setCarrito((prev) => {
+      const producto = prev.find((p) => p.nombre === nombre);
+
+      if (!producto) return prev;
+
+      let nuevoCarrito;
+      if (producto.cantidad > 1) {
+        nuevoCarrito = prev.map((p) =>
+          p.nombre === nombre ? { ...p, cantidad: p.cantidad - 1 } : p
+        );
+      } else {
+        nuevoCarrito = prev.filter((p) => p.nombre !== nombre);
+      }
+
+      actualizarLocalStorage(nuevoCarrito);
+      return nuevoCarrito;
+    });
+  };
+
+  // Eliminar completamente un producto
+  const eliminarProducto = (nombre) => {
+    setCarrito((prev) => {
+      const nuevoCarrito = prev.filter((p) => p.nombre !== nombre);
+      actualizarLocalStorage(nuevoCarrito);
+      return nuevoCarrito;
+    });
+  };
+
+  // Vaciar carrito completo
   const vaciarCarrito = () => {
     setCarrito([]);
     localStorage.removeItem('carrito');
   };
 
+  // Obtener cantidad de un producto específico
+  const obtenerCantidadProducto = (nombre) => {
+    const item = carrito.find((p) => p.nombre === nombre);
+    return item?.cantidad || 0;
+  };
+
   return (
-    <CartContext.Provider value={{ carrito, agregarAlCarrito, vaciarCarrito }}>
+    <CartContext.Provider
+      value={{
+        carrito,
+        agregarAlCarrito,
+        disminuirCantidad,
+        eliminarProducto,
+        vaciarCarrito,
+        obtenerCantidadProducto,
+        ordenes,
+        setOrdenes,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
