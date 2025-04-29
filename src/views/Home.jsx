@@ -31,7 +31,7 @@ function Home() {
                         {/* Columna de imagen */}
                         <div className="flex justify-center md:justify-end">
                             <img
-                                src="/tazas.png"
+                                src="/logo.svg"
                                 alt="Tazas de café"
                                 className="max-w-md w-full shadow-lg flex justify-center md:justify-end bg-gradient-to-b from-white to-gray-200 rounded-3xl p-6"
                             />

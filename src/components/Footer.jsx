@@ -11,7 +11,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           
           {/* Logo */}
-          <div className="flex flex-col items-center md:items-start space-y-4 border-e-2 border-[#e2cfc2]">
+          <div className="flex flex-col items-center md:items-start space-y-4 border-e-0 md:border-e-2 border-[#e2cfc2]">
             <img src="/logo.png" alt="Logo Garzas" className="h-24 w-auto" />
           </div>
 

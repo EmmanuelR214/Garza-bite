@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon, ShoppingCartIcon  } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import { CartContext } from '../Context/ContextStore'
 
 const navigation = [
     { name: 'Inicio', href: '/' },
@@ -14,51 +15,55 @@ function classNames(...classes) {
 }
 
 function Nav() {
+    const { carrito } = useContext(CartContext);
     return (
         <Disclosure as="nav"  className="bg-white/30 backdrop-blur-md fixed w-full z-50">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 ">
                 <div className="relative flex h-16 items-center justify-between">
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                    {/* Mobile menu button*/}
-                    <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-[#402d07] hover:text-[#573d0a] ">
-                    <span className="absolute -inset-0.5" />
-                    <span className="sr-only">Open main menu</span>
-                    <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-                    <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
-                    </DisclosureButton>
-                </div>
-                <div className="flex flex-1 items-center justify-center sm:items-center sm:justify-between">
-                    <div className="flex shrink-0 items-center justify-center sm:justify-start w-full sm:w-auto">
-                        <img
-                        alt="Your Company"
-                        src="/logo.png"
-                        className="h-12 w-auto"
-                        />
+                    <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                        {/* Mobile menu button*/}
+                        <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-[#402d07] hover:text-[#573d0a] ">
+                        <span className="absolute -inset-0.5" />
+                        <span className="sr-only">Open main menu</span>
+                        <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
+                        <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+                        </DisclosureButton>
                     </div>
-                    <div className="hidden sm:flex sm:flex-1 sm:justify-center">
-                        <div className="flex space-x-8">
-                        {navigation.map((item) => (
-                            <Link
-                            key={item.name}
-                            to={item.href}
-                            className="px-3 py-2 rounded-md text-sm font-medium text-[#402d07] hover:text-[#573d0a]"
-                            >
-                            {item.name}
-                            </Link>
-                        ))}
+                    <div className="flex flex-1 items-center justify-center sm:items-center sm:justify-between">
+                        <div className="flex shrink-0 items-center justify-center sm:justify-start w-full sm:w-auto">
+                            <img
+                            alt="Your Company"
+                            src="/logo.png"
+                            className="h-12 w-auto"
+                            />
+                        </div>
+                        <div className="hidden sm:flex sm:flex-1 sm:justify-center">
+                            <div className="flex space-x-8">
+                            {navigation.map((item) => (
+                                <Link
+                                key={item.name}
+                                to={item.href}
+                                className="px-3 py-2 rounded-md text-sm font-medium text-[#402d07] hover:text-[#573d0a]"
+                                >
+                                {item.name}
+                                </Link>
+                            ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <Link
-                    to="/cart"
-                    className="relative rounded-full p-1 text-[#402d07] hover:text-[#573d0a] focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
-                    >
-                        <span className="absolute -inset-1.5" />
-                        <span className="sr-only">View notifications</span>
-                        <ShoppingCartIcon aria-hidden="true" className="size-6" />
-                    </Link>
-                </div>
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                        <Link
+                            to="/cart"
+                            className="relative rounded-full p-1 text-[#402d07] hover:text-[#573d0a] focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                        >
+                            <ShoppingCartIcon aria-hidden="true" className="size-6" />
+                            {carrito.length > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                                {carrito.length}
+                            </span>
+                            )}
+                        </Link>
+                    </div>
                 </div>
             </div>
 
