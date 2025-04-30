@@ -7,6 +7,8 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
   const [ordenes, setOrdenes] = useState([]);
+  const [completadas, setCompletadas] = useState([]);
+const [canceladas, setCanceladas] = useState([]);
 
   // Cargar carrito desde localStorage al iniciar
   useEffect(() => {
@@ -14,6 +16,8 @@ export const CartProvider = ({ children }) => {
     const ordenesGuardadas = JSON.parse(localStorage.getItem('ordenes')) || [];
     setOrdenes(ordenesGuardadas);
     setCarrito(carritoGuardado);
+    setCompletadas(JSON.parse(localStorage.getItem('completadas')) || []);
+    setCanceladas(JSON.parse(localStorage.getItem('canceladas')) || []);
   }, []);
 
   // Guardar carrito en localStorage
@@ -95,6 +99,10 @@ export const CartProvider = ({ children }) => {
         obtenerCantidadProducto,
         ordenes,
         setOrdenes,
+        completadas,
+        setCompletadas,
+        canceladas,
+        setCanceladas
       }}
     >
       {children}

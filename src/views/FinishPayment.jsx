@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function FinishPayment() {
   const { carrito, vaciarCarrito, setOrdenes, ordenes } = useContext(CartContext);
   const [opcion, setOpcion] = useState('rapido');
+  const [horaSeleccionada, setHoraSeleccionada] = useState('');
   const [ticket, setTicket] = useState('');
   const navigate = useNavigate();
 
@@ -33,13 +34,16 @@ function FinishPayment() {
     const correo = emailMatch ? decodeURIComponent(emailMatch[1]) : 'usuario@desconocido.com';
 
     const comentario = localStorage.getItem('comentarioOrden') || '';
-
+    console.log(horaSeleccionada)
     const nuevaOrden = {
+      opcion,
+      horaSeleccionada,
       ticket,
       correo,
       carrito,
       total,
       comentario,
+      estado: 'pendiente',
       fecha: new Date().toISOString(),
     };
 
@@ -52,7 +56,8 @@ function FinishPayment() {
     localStorage.removeItem('comentarioOrden');
 
     // Redirigir
-    navigate('/confirmPay');
+    navigate('/confirmPay', { state: { fromFinish: true } });
+
   };
 
   return (
@@ -116,19 +121,23 @@ function FinishPayment() {
           </div>
         )}
 
-        {opcion === 'hora' && (
-          <div className="mt-2">
-            <label className="text-sm font-medium mb-1 block">Seleccionar hora</label>
-            <select className="w-full border text-sm rounded-md px-4 py-2 text-gray-700">
-              <option disabled selected>Escoge una hora</option>
-              {opcionesHora.map((hora) => (
-                <option key={hora} value={hora}>
-                  {hora}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+{opcion === 'hora' && (
+        <div className="mt-2">
+          <label className="text-sm font-medium mb-1 block">Seleccionar hora</label>
+          <select
+            className="w-full border text-sm rounded-md px-4 py-2 text-gray-700"
+            value={horaSeleccionada}
+            onChange={(e) => setHoraSeleccionada(e.target.value)} // <- Aquí se guarda la hora
+          >
+            <option value="" disabled>Escoge una hora</option>
+            {opcionesHora.map((hora) => (
+              <option key={hora} value={hora}>
+                {hora}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       </div>
 
       {/* Botón Finalizar */}

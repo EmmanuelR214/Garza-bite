@@ -11,6 +11,7 @@ const Cart = lazy(() => import("../views/Cart"));
 const Login = lazy(() => import("../views/Login"));
 const FinishPayment = lazy(() => import("../views/FinishPayment"));
 const ConfirmPay = lazy(() => import("../views/ConfirmPay"));
+const Ordenes = lazy(() => import("../views/Ordenes"));
 
 export const router = createBrowserRouter([
     {
@@ -65,6 +66,14 @@ export const router = createBrowserRouter([
                 element: (
                     <Suspense fallback={<Loader />}>
                         <ConfirmPay />
+                    </Suspense>
+                ),
+            },
+            {
+                path: "/ordenes",
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Ordenes />
                     </Suspense>
                 ),
             },

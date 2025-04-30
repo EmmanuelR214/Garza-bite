@@ -100,16 +100,83 @@ export const CartItem = ({ producto }) => {
 
 export  const ResumenProducto = ({ imagen, nombre, cantidad }) => {
     return (
-      <div className="flex items-center gap-4 bg-white p-4 rounded-md shadow-sm">
-        <img
-          src={imagen}
-          alt={nombre}
-          className="w-16 h-16 object-cover rounded-md"
-        />
-        <div>
-          <h3 className="font-semibold text-lg text-[#1f1f1f]">{nombre}</h3>
-          <p className="text-sm text-gray-700">Cantidad: {cantidad}</p>
+        <div className="flex items-center gap-4 bg-white p-4 rounded-md shadow-sm">
+            <img
+            src={imagen}
+            alt={nombre}
+            className="w-16 h-16 object-cover rounded-md"
+            />
+            <div>
+            <h3 className="font-semibold text-lg text-[#1f1f1f]">{nombre}</h3>
+            <p className="text-sm text-gray-700">Cantidad: {cantidad}</p>
+            </div>
         </div>
-      </div>
     );
-  };
+};
+
+export const OrderCard = ({ orden }) => {
+    const { setOrdenes, ordenes, setCompletadas, completadas, setCanceladas, canceladas } = useContext(CartContext);
+    const handleActualizarEstado = (nuevoEstado) => {
+        const ordenActualizada = { ...orden, estado: nuevoEstado };
+    
+        // Remover de pendientes
+        const nuevasPendientes = ordenes.filter(o => o.ticket !== orden.ticket);
+        setOrdenes(nuevasPendientes);
+        localStorage.setItem('ordenes', JSON.stringify(nuevasPendientes));
+    
+        if (nuevoEstado === 'completada') {
+            const nuevasCompletadas = [...completadas, ordenActualizada];
+            setCompletadas(nuevasCompletadas);
+            localStorage.setItem('completadas', JSON.stringify(nuevasCompletadas));
+        } else if (nuevoEstado === 'cancelada') {
+            const nuevasCanceladas = [...canceladas, ordenActualizada];
+            setCanceladas(nuevasCanceladas);
+            localStorage.setItem('canceladas', JSON.stringify(nuevasCanceladas));
+        }
+    };
+    
+    const textoRecogida = orden.opcion === 'hora'
+    ? `Recoge ${orden.horaSeleccionada}`
+    : 'Recoge ahora';
+    
+    return (
+        <div className="bg-white shadow-md rounded-lg p-4 space-y-2 text-sm">
+            <div className="flex justify-between items-center">
+            <span className="font-bold capitalize">{orden.estado}</span>
+            <span className="text-orange-500 font-medium">Orden {orden.ticket}</span>
+            <span className="font-bold">comentarios:</span>
+            </div>
+            <div className="text-gray-600 italic text-sm">{textoRecogida}</div>
+            {/* Lista de productos */}
+            <ul className="space-y-1">
+            {orden.carrito.map((prod, idx) => (
+                <li key={idx} className="flex justify-between">
+                <span>{prod.nombre}</span>
+                <span className="text-orange-500 font-medium">x{prod.cantidad}</span>
+                </li>
+            ))}
+            </ul>
+    
+            {/* Comentario */}
+            <p className="text-sm text-gray-800">{orden.comentario || 'Sin comentarios'}</p>
+    
+            {/* Botones solo si está pendiente */}
+            {orden.estado === 'pendiente' && (
+            <div className="flex justify-between mt-4">
+                <button
+                onClick={() => handleActualizarEstado('cancelada')}
+                className="bg-red-400 hover:bg-red-500 text-white px-4 py-1 rounded-full font-semibold"
+                >
+                Cancelar
+                </button>
+                <button
+                onClick={() => handleActualizarEstado('completada')}
+                className="bg-green-400 hover:bg-green-500 text-white px-4 py-1 rounded-full font-semibold"
+                >
+                Completado
+                </button>
+            </div>
+            )}
+        </div>
+    );
+};

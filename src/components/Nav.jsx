@@ -31,11 +31,13 @@ function Nav() {
                     </div>
                     <div className="flex flex-1 items-center justify-center sm:items-center sm:justify-between">
                         <div className="flex shrink-0 items-center justify-center sm:justify-start w-full sm:w-auto">
-                            <img
-                            alt="Your Company"
-                            src="/logo.png"
-                            className="h-12 w-auto"
-                            />
+                            <Link to="/">
+                                <img
+                                    alt="Your Company"
+                                    src="/logo.png"
+                                    className="h-12 w-auto"
+                                />
+                            </Link>
                         </div>
                         <div className="hidden sm:flex sm:flex-1 sm:justify-center">
                             <div className="flex space-x-8">

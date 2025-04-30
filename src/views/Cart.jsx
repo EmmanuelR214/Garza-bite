@@ -11,6 +11,7 @@ function Car() {
     const [comentario, setComentario] = useState('');
     const navigate = useNavigate();
     const [total, setTotal] = useState(0);
+    const [error, setError] = useState(false)
     // Calcular el total dinámicamente
     useEffect(() => {
         const nuevoTotal = carrito.reduce(
@@ -20,7 +21,10 @@ function Car() {
         setTotal(nuevoTotal);
     }, [carrito]);
     const handleSiguiente = () => {
-        // Aquí podrías guardar el comentario en localStorage si es necesario
+        if (carrito.length === 0) {
+            setError(true);
+            return;
+        }
         localStorage.setItem('comentarioOrden', comentario);
         navigate('/finishPayment'); // Redirigir a siguiente pantalla
     };
@@ -49,15 +53,20 @@ function Car() {
                 />
             </div>
 
-            <div className="mt-6 flex flex-col md:flex-row md:items-center md:justify-evenly gap-4">
-                <p className="text-lg font-medium text-center md:text-right">
-                Total: <span className="font-bold text-[#1f1f1f]">${total}</span>
-                </p>
-                <button onClick={handleSiguiente} className="flex items-center justify-center bg-[#2e1d06] hover:bg-[#402d07] text-white font-semibold px-6 py-3 rounded-full w-full md:w-auto">
-                Siguiente
-                <span className="ml-3">➜</span>
-                </button>
-            </div>
+                <div className="flex flex-col ">
+                    {error && (
+                        <p className="text-red-500 text-sm text-center font-bold mb-4">No hay nada en el carrito</p>
+                    )}
+                    <div className='mt-6 flex flex-col md:flex-row md:items-center md:justify-evenly gap-4'>                        
+                    <p className="text-lg font-medium text-center md:text-right">
+                    Total: <span className="font-bold text-[#1f1f1f]">${total}</span>
+                    </p>
+                    <button onClick={handleSiguiente} className="flex items-center justify-center bg-[#2e1d06] hover:bg-[#402d07] text-white font-semibold px-6 py-3 rounded-full w-full md:w-auto">
+                        Siguiente
+                        <span className="ml-3">➜</span>
+                    </button>
+                    </div>
+                </div>
             </div>
         </div>
         </div>
