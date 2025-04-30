@@ -46,26 +46,55 @@ const [canceladas, setCanceladas] = useState([]);
     });
   };
 
-  // Disminuir cantidad o eliminar producto si llega a 0
-  const disminuirCantidad = (nombre) => {
+  const aumentarCantidad = (nombre) => {
     setCarrito((prev) => {
       const producto = prev.find((p) => p.nombre === nombre);
-
       if (!producto) return prev;
-
-      let nuevoCarrito;
-      if (producto.cantidad > 1) {
-        nuevoCarrito = prev.map((p) =>
-          p.nombre === nombre ? { ...p, cantidad: p.cantidad - 1 } : p
-        );
-      } else {
-        nuevoCarrito = prev.filter((p) => p.nombre !== nombre);
-      }
-
+  
+      const nuevoCarrito = prev.map((p) =>
+        p.nombre === nombre ? { ...p, cantidad: p.cantidad + 1 } : p
+      );
+  
       actualizarLocalStorage(nuevoCarrito);
       return nuevoCarrito;
     });
   };
+  
+
+  // Disminuir cantidad o eliminar producto si llega a 0
+  const disminuirCantidad = (nombre) => {
+    setCarrito((prev) => {
+      const producto = prev.find((p) => p.nombre === nombre);
+      if (!producto || producto.cantidad <= 1) return prev; // No disminuir si ya está en 1
+  
+      const nuevoCarrito = prev.map((p) =>
+        p.nombre === nombre ? { ...p, cantidad: p.cantidad - 1 } : p
+      );
+  
+      actualizarLocalStorage(nuevoCarrito);
+      return nuevoCarrito;
+    });
+  };
+  
+  // const disminuirCantidad = (nombre) => {
+  //   setCarrito((prev) => {
+  //     const producto = prev.find((p) => p.nombre === nombre);
+
+  //     if (!producto) return prev;
+
+  //     let nuevoCarrito;
+  //     if (producto.cantidad > 1) {
+  //       nuevoCarrito = prev.map((p) =>
+  //         p.nombre === nombre ? { ...p, cantidad: p.cantidad - 1 } : p
+  //       );
+  //     } else {
+  //       nuevoCarrito = prev.filter((p) => p.nombre !== nombre);
+  //     }
+
+  //     actualizarLocalStorage(nuevoCarrito);
+  //     return nuevoCarrito;
+  //   });
+  // };
 
   // Eliminar completamente un producto
   const eliminarProducto = (nombre) => {
@@ -102,7 +131,8 @@ const [canceladas, setCanceladas] = useState([]);
         completadas,
         setCompletadas,
         canceladas,
-        setCanceladas
+        setCanceladas,
+        aumentarCantidad
       }}
     >
       {children}

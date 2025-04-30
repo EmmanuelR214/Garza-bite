@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { FaLocationArrow, FaWhatsapp, FaGoogle } from 'react-icons/fa';
 
 function Footer() {
   return (
@@ -19,13 +19,13 @@ function Footer() {
           <div className="flex flex-col items-center space-y-4">
             <h3 className="font-semibold text-lg">Síguenos</h3>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
-                <FaFacebookF />
+              <a href="https://www.uaeh.edu.mx/campus/preparatoria5/" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
+                <FaGoogle />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
-                <FaInstagram />
+              <a href="https://maps.app.goo.gl/LRDkef4tFdRTToqDA" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
+                <FaLocationArrow />
               </a>
-              <a href="https://wa.me/521234567890" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
+              <a href="https://wa.me/7711757784" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
                 <FaWhatsapp />
               </a>
             </div>

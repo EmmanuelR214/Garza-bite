@@ -54,7 +54,7 @@ export const ProductCard = ({ nombre, precio, imagen }) => {
 };
 
 export const CartItem = ({ producto }) => {
-    const { agregarAlCarrito, disminuirCantidad, eliminarProducto } = useContext(CartContext);
+    const { aumentarCantidad, disminuirCantidad, eliminarProducto } = useContext(CartContext);
     return (
         <div className="flex items-center justify-between bg-white p-4 rounded-2xl shadow-md mb-4">
             {/* Imagen */}
@@ -80,7 +80,7 @@ export const CartItem = ({ producto }) => {
             </button>
             <span className="text-lg font-bold text-[#1f1f1f]">{producto.cantidad}</span>
             <button
-                onClick={() => agregarAlCarrito(producto.nombre)}
+                onClick={() => aumentarCantidad(producto.nombre)}
                 className="bg-orange-400 hover:bg-orange-500 text-white rounded-full w-8 h-8 flex justify-center items-center text-xl font-bold cursor-pointer"
             >
                 +

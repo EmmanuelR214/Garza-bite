@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Cookies from 'js-cookie'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 function Login() {
     const navigate = useNavigate();
@@ -8,14 +8,6 @@ function Login() {
     const [email, setEmail] = useState('');
     return (
         <>
-        {/*
-            This example requires updating your template:
-
-            ```
-            <html class="h-full bg-white">
-            <body class="h-full">
-            ```
-        */}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
@@ -53,9 +45,9 @@ function Login() {
                         Contraseña
                         </label>
                         <div className="text-sm">
-                        <a href="#" className="font-semibold text-[#2F2105] hover:text-[#573d0a]">
+                        <Link to="/recuperar" className="font-semibold text-[#2F2105] hover:text-[#573d0a]">
                             ¿Olvidaste tu contraseña?
-                        </a>
+                        </Link>
                         </div>
                     </div>
                     <div className="mt-2">
@@ -75,9 +67,9 @@ function Login() {
                 </form>
                 <p className="mt-10 text-center text-sm/6 text-gray-500">
                     ¿No tienes una cuenta?{' '}
-                    <a href="#" className="font-semibold text-[#2F2105] hover:text-[#573d0a]">
+                    <Link to="/register" className="font-semibold text-[#2F2105] hover:text-[#573d0a]">
                     Registrate
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>
