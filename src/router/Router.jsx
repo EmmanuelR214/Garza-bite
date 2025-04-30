@@ -42,6 +42,14 @@ export const router = createBrowserRouter([
         ),
     },
     {
+        path: "/ordenes",
+        element: (
+            <Suspense fallback={<Loader />}>
+                <Ordenes />
+            </Suspense>
+        ),
+    },
+    {
         path: "/", // 🔒 Ahora sí, todas las demás protegidas
         element: (
             <ProtectedRoute/>
@@ -93,14 +101,6 @@ export const router = createBrowserRouter([
                 element: (
                     <Suspense fallback={<Loader />}>
                         <ConfirmPay />
-                    </Suspense>
-                ),
-            },
-            {
-                path: "/ordenes",
-                element: (
-                    <Suspense fallback={<Loader />}>
-                        <Ordenes />
                     </Suspense>
                 ),
             },
