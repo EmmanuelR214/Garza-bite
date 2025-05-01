@@ -118,12 +118,9 @@ export const OrderCard = ({ orden }) => {
     const { setOrdenes, ordenes, setCompletadas, completadas, setCanceladas, canceladas } = useContext(CartContext);
     const handleActualizarEstado = (nuevoEstado) => {
         const ordenActualizada = { ...orden, estado: nuevoEstado };
-    
-        // Remover de pendientes
         const nuevasPendientes = ordenes.filter(o => o.ticket !== orden.ticket);
         setOrdenes(nuevasPendientes);
         localStorage.setItem('ordenes', JSON.stringify(nuevasPendientes));
-    
         if (nuevoEstado === 'completada') {
             const nuevasCompletadas = [...completadas, ordenActualizada];
             setCompletadas(nuevasCompletadas);
@@ -147,7 +144,8 @@ export const OrderCard = ({ orden }) => {
             <span className="font-bold">comentarios:</span>
             </div>
             <div className="text-gray-600 italic text-sm">{textoRecogida}</div>
-            {/* Lista de productos */}
+            <div className="text-gray-900 text-sm">Pedido de: {orden.correo}</div>
+            
             <ul className="space-y-1">
             {orden.carrito.map((prod, idx) => (
                 <li key={idx} className="flex justify-between">
@@ -156,11 +154,9 @@ export const OrderCard = ({ orden }) => {
                 </li>
             ))}
             </ul>
-    
-            {/* Comentario */}
+            
             <p className="text-sm text-gray-800">{orden.comentario || 'Sin comentarios'}</p>
-    
-            {/* Botones solo si está pendiente */}
+            
             {orden.estado === 'pendiente' && (
             <div className="flex justify-between mt-4">
                 <button

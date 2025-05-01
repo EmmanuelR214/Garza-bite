@@ -1,6 +1,6 @@
 export const productos = [
     // Snacks
-    { nombre: "Sándwich", precio: 25, categoria: "Snacks", imagen: "sandwich.jpg" },
+    { nombre: "Sándwich", precio: 25, categoria: "Snacks", imagen: "Sandwich2.jpg" },
     { nombre: "Cuernos", precio: 25, categoria: "Snacks", imagen: "cuernitos.jpg" },
     { nombre: "Hamburguesa sencilla", precio: 40, categoria: "Snacks", imagen: "hamburguesa-sencilla.jpg" },
     { nombre: "Hamburguesa especial", precio: 50, categoria: "Snacks", imagen: "hamburguesa-especial.jpg" },
@@ -21,14 +21,14 @@ export const productos = [
     { nombre: "Taco de bistec", precio: 10, categoria: "Antojitos", imagen: "tacosbisec.jpg" },
     { nombre: "Taco de chorizo", precio: 10, categoria: "Antojitos", imagen: "tacoschorizo.jpg" },
     { nombre: "Sopes", precio: 35, categoria: "Antojitos", imagen: "sopes.jpg" },
-    { nombre: "Quesadillas", precio: 15, categoria: "Antojitos", imagen: "quesadillaswebp.jpg" },
+    { nombre: "Quesadillas", precio: 15, categoria: "Antojitos", imagen: "Quesadillas.jpg" },
     { nombre: "Tacos dorados", precio: 35, categoria: "Antojitos", imagen: "tacosdorados.jpg" },
     { nombre: "Burritos", precio: 40, categoria: "Antojitos", imagen: "burritos.jpg" },
     // Desayunos
-    { nombre: "Chilaquiles", precio: 40, categoria: "Desayunos", imagen: "chilaquiles2.jpg" },
+    { nombre: "Chilaquiles", precio: 40, categoria: "Desayunos", imagen: "Chilaquiles.jpg" },
     { nombre: "Huevos al gusto", precio: 45, categoria: "Desayunos", imagen: "huevos.jpg" },
     // Bebidas
-    { nombre: "Agua de Jamaica", precio: 15, categoria: "Bebidas", imagen: "Jamaica.jpg" },
+    { nombre: "Agua de Jamaica", precio: 15, categoria: "Bebidas", imagen: "AguaJamaica.jpg" },
 ];
 
 export const categorias = [
