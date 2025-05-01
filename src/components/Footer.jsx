@@ -25,7 +25,7 @@ function Footer() {
               <a href="https://maps.app.goo.gl/LRDkef4tFdRTToqDA" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
                 <FaLocationArrow />
               </a>
-              <a href="https://wa.me/7711757784" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
+              <a href="https://wa.me/7711942488" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-orange-500">
                 <FaWhatsapp />
               </a>
             </div>
